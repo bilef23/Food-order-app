@@ -1,6 +1,6 @@
-#food-order-app
+# food-order-app
 
-###Topic: Application for ordering food - FoddHub
+### Topic: Application for ordering food - FoddHub
 **Subject: Internet technologies**
 
 *Short description:*
