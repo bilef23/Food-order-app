@@ -1,0 +1,123 @@
+﻿
+@model FoodHub.Models.Mail
+
+<main aria-labelledby="title">
+    <style>
+        body {
+            background-color: #f0f0f0;
+        }
+
+        .contact-form {
+            margin-top: 5 %;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+            .contact-form h2 {
+                text-align: center;
+                margin-bottom: 20px;
+                color: #333333;
+            }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+            .form-group label {
+                font-weight: bold;
+            }
+
+
+
+        .btn-submit {
+            background-color: #433E49;
+            border: none;
+            border-radius: 5px;
+            color: #ffffff;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+            .btn-submit:hover {
+                background-color: #928490;
+            }
+
+        .error {
+            color: red;
+            font-weight: bold;
+            margin-top: 4px;
+        }
+    </style>
+    <body>
+        <div class="container">
+            <div class="contact-form">
+                <div class="row">
+                    <div class="col d-flex justify-content-center align-items-center">
+                        <img src="@Url.Content(ViewBag.Picture)" alt="Mail Image" class="img-fluid mb-4" id="img-mail" style="max-width: 300px;">
+                    </div>
+
+                    <div class="col contact-form">
+                        <h2>Get in touch</h2>
+                        <div>
+                            @using (Html.BeginForm("SendEmail", "Email", FormMethod.Post, new { enctype = "multipart/form-data", onsubmit = "return validateForm();"  }))
+                            {
+                                <div class="form-group">
+                                    <label for="name">Your Name</label>
+                                    <div>@Html.TextBoxFor(model => model.Subject, htmlAttributes: new { @class = "form-control" })</div>
+                                    <span id="nameError" class="error"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Your Email</label>
+                                    <div>@Html.TextBoxFor(model => model.From, htmlAttributes: new { @class = "form-control",id="email" })</div>
+                                    <span id="emailError" class="error"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="message">Message</label>
+                                    <div>@Html.TextAreaFor(model => model.Body, htmlAttributes: new { @class = "form-control",id="message" })</div>
+                                    <span id="messageError" class="error"></span>
+                                </div>
+
+                                <button type="submit" class="btn btn-submit btn-block">Send Message</button>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+
+        <!-- Add Bootstrap JS scripts -->
+
+    </body>
+
+</main>
+@section Scripts{
+    <script>
+        function validateForm() {
+            var emailPattern = /^[a-zA-Z0-9._%+-]+@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+            var isValid = true
+            e = document.getElementById("email")
+            m = document.getElementById("message")
+            error = document.getElementById("emailError")
+            messageError = document.getElementById("messageError")
+            messageError.textContent = ""
+            if (m.value == "") {
+                messageError.textContent = "Please enter your message"
+                isValid=false
+            } 
+            if (!emailPattern.test(e.value)) {
+                error.textContent = "Please enter a valid email address"
+                isValid=false
+            }
+           
+            return isValid
+
+
+        }
+    </script>
+}
+

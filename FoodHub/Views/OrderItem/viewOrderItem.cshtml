@@ -1,0 +1,120 @@
+﻿@model FoodHub.Models.DTO.OrderDTO
+@{
+    ViewBag.Title = "viewOrderItem";
+}
+
+
+<div class="container d-flex justify-content-center" >
+  
+    <div class="card  shadow " style="width: 100%; max-width: 40rem;">
+        <div class="m-4">
+
+            <h2>Your want to add this item to your cart:</h2>
+            <div class="card-body">
+                <h5 class="card-title">@Model.OrderItem.Meal.name</h5>
+                @using (Html.BeginForm("addToCart", "Cart", FormMethod.Post, new { id = "myForm" }))
+                {
+                    @Html.HiddenFor(model => model.OrderPrice, new { id = "OrderPrice" })
+
+                    @Html.HiddenFor(model => model.ItemId)
+
+
+                    <h6>
+                        Quantity: <button type="button" onclick="decrementNumber()" class="rounded-2" style="background-color:#DBC1AD">-</button>
+                        @Html.TextBoxFor(model => model.quantity, new { style = "width: 30px;", name = "quantity", id = "quantity" })
+
+                        <button type="button" onclick="incrementNumber()" class="rounded-2" style="background-color:#DBC1AD">+</button>
+                    </h6>
+                    <h6>Select the ingredients you want in your meal:</h6>
+                    <p>
+                        @for (int i = 0; i < Model.OrderItem.Meal.Ingredients.Count; i++)
+                        {
+                            <div>
+
+                                @Html.CheckBoxFor(model => model.isChecked[i], new { htmlAttributes = new { @class = "form-check-input" } })
+                                <h6 class="d-inline">@Model.OrderItem.Meal.Ingredients.ElementAt(i).Ingredient.Name</h6>
+                            </div>
+                        }
+                    </p>
+                    <p class="card-text"><small class="text-body-secondary">Price: <span id="total" name="OrderPrice">@Model.OrderPrice</span></small></p>
+
+                    <button type="submit" class="btn btn-primary" id="liveAlertBtn" style="background-color: #433E49">Add to Cart</button>
+                    <div id="liveAlertPlaceholder"></div>
+                }
+
+            </div>
+
+
+        </div>
+        <img src=@Url.Content(Model.OrderItem.Meal.urlImage) class="card-img-bottom" alt="...">
+    </div>
+</div>
+@section Scripts{
+    <script>
+        
+        var base=@Model.OrderPrice
+            function incrementNumber() {
+                var selectedNumberInput = document.getElementById("quantity");
+                console.log(selectedNumberInput);
+                var currentValue = parseInt(selectedNumberInput.value)+1;
+                selectedNumberInput.value = currentValue;
+                var sp = document.getElementById("total")
+                var currPrice = base + parseInt(sp.innerHTML);
+                sp.innerHTML = currPrice
+                document.getElementById('OrderPrice').value = currPrice;
+
+                
+        }
+        function decrementNumber() {
+            var selectedNumberInput = document.getElementById("quantity");
+            var currentValue = parseInt(selectedNumberInput.value);
+            selectedNumberInput.value = currentValue - 1;
+            var sp = document.getElementById("total")
+            var currPrice = parseInt(sp.innerHTML)-base;
+            sp.innerHTML = currPrice
+            document.getElementById("updatedQuantity").value = currentValue;
+            document.getElementById('OrderPrice').value = currPrice;
+        }
+        const alertPlaceholder = document.getElementById('liveAlertPlaceholder')
+        const appendAlert = (message, type) => {
+            const wrapper = document.createElement('div')
+            wrapper.innerHTML = [
+                `<div class="alert alert-${type} alert-dismissible" role="alert">`,
+                `   <div>${message}</div>`,
+                '   <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>',
+                '</div>'
+            ].join('')
+
+            alertPlaceholder.append(wrapper)
+        }
+
+        const alertTrigger = document.getElementById('liveAlertBtn')
+        if (alertTrigger) {
+            alertTrigger.addEventListener('click', () => {
+                appendAlert('Successfully added to cart', 'success')
+            })
+            
+        }
+        $(document).ready(function () {
+            const alertTrigger = document.getElementById('liveAlertBtn')
+            if (alertTrigger) {
+                alertTrigger.addEventListener('click', function (event) {
+                    event.preventDefault(); // Prevent the default form submission behavior
+                    $.ajax({
+                        type: "POST",
+                        url: "/Cart/addToCart",
+                        data: $("#myForm").serialize(),
+                        dataType: "json",
+                        success: function (response) {
+                            
+                        },
+                        error: function (error) {
+                            console.log(error);
+                        }
+                    });
+                });
+            }
+        });
+
+    </script>
+    }

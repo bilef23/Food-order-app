@@ -1,0 +1,143 @@
+﻿@model IEnumerable<FoodHub.Models.Category>
+
+@{
+    ViewBag.Title = "Index";
+}
+<main>
+    <div>
+        <div class="row gx-0 gy-0 mr-0">
+
+            <img src="~/Pictures/food-final.png" />
+
+        </div>
+
+    </div>
+    <div class="container">
+            <h2 class="p-3" style="color:#433E49;font-weight:bold">Categories</h2>
+    </div>
+    <div class="container">
+        <div id="carouselExampleCaptions" class="carousel slide">
+            <div class="carousel-indicators">
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="0" class="active" aria-current="true" aria-label="Slide 1"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="1" aria-label="Slide 2"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="2" aria-label="Slide 3"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="3" aria-label="Slide 4"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="4" aria-label="Slide 5"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="5" aria-label="Slide 6"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="6" aria-label="Slide 7"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="7" aria-label="Slide 8"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="8" aria-label="Slide 9"></button>
+                <button type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide-to="9" aria-label="Slide 0"></button>
+               
+            </div>
+            <div class="carousel-inner">
+                <div class="carousel-item active">
+                    <a  href="/Meal/CategoryMeals/1">
+                        <img src="~/Pictures/burger.jpg" class="imgmeals" alt="...">
+                        <div class="carousel-caption">
+                            <h5 style="color:#F3E8EB">Burger</h5>
+                        </div>
+                    </a>
+                    
+                </div>
+
+                <div class="carousel-item">
+                    <a href="/Meal/CategoryMeals/2">
+                        <img src="~/Pictures/burito.jpg" class="imgmeals" alt="...">
+                        <div class="carousel-caption">
+                            <h5 style="color:#F3E8EB">Burrito</h5>
+                            
+                        </div>
+                    </a>
+                    
+                </div>
+                <div class="carousel-item">
+                    <a href="/Meal/CategoryMeals/3">
+                        <img src="~/Pictures/gyro.jpg" class="imgmeals" alt="...">
+                        <div class="carousel-caption">
+                            <h5 style="color:#F3E8EB">Gyros</h5>
+                        </div>
+                    </a>
+                    
+                </div>
+                <div class="carousel-item">
+                    <a href="/Meal/CategoryMeals/4">
+                        <img src="~/Pictures/sandwiches.jpg" class="imgmeals" alt="...">
+                        <div class="carousel-caption">
+                            <h5 style="color:#F3E8EB">Sandwich</h5>
+                        </div>
+                    </a>
+                </div>
+                <div class="carousel-item">
+                    <a href="/Meal/CategoryMeals/5">
+                        <img src="~/Pictures/pzz.jpg" class="imgmeals" alt="...">
+                        <div class="carousel-caption">
+                            <h5 style="color:#F3E8EB">Pizza</h5>
+                        </div>
+                    </a>
+                   
+                </div>
+                
+                <div class="carousel-item">
+                    <a href="/Meal/CategoryMeals/8">
+                        <img src="~/Pictures/salads.jpg" class="imgmeals" alt="...">
+                        <div class="carousel-caption">
+                            <h5 style="color:#F3E8EB">Salad</h5>
+                        </div>
+                    </a>
+                    
+                </div>
+                <div class="carousel-item">
+                    <a href="/Meal/CategoryMeals/7">
+                        <img src="~/Pictures/pastas.jpg" class="imgmeals" alt="...">
+                        <div class="carousel-caption">
+                            <h5 style="color:#F3E8EB">Pasta</h5>
+                        </div>
+                    </a>
+                    
+                </div>
+                
+                <div class="carousel-item">
+                    <a href="/Meal/CategoryMeals/10">
+                        <img src="~/Pictures/f.jpg" class="imgmeals" alt="...">
+                        <div class="carousel-caption">
+                            <h5 style="color:#F3E8EB">Fish</h5>
+                        </div>
+                    </a>
+                   
+                </div>
+                <div class="carousel-item">
+                    <a href="/Meal/CategoryMeals/11">
+                        <img src="~/Pictures/sush.jpg" class="imgmeals" alt="...">
+                        <div class="carousel-caption">
+                            <h5 style="color:#F3E8EB">Sushi</h5>
+                        </div>
+                    </a>
+                    
+                </div>
+               
+                
+            </div>
+            <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="prev">
+                <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Previous</span>
+            </button>
+            <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleCaptions" data-bs-slide="next">
+                <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                <span class="visually-hidden">Next</span>
+            </button>
+        </div>
+    </div>
+    
+    
+  
+    <style>
+        .carousel-inner{
+            text-align: center;
+        }
+        .carousel-item img {
+            height: 40vw;
+            width: 80vw;
+        }
+    </style>
+</main>

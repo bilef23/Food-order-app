@@ -1,0 +1,138 @@
+﻿@model FoodHub.Models.Mail
+@{
+    ViewBag.Title = "Contact";
+}
+<main aria-labelledby="title">
+    <style>
+        body {
+            background-color: #f0f0f0;
+        }
+
+        .contact-form {
+            margin-top: 5   %;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0px 2px 10px rgba(0, 0, 0, 0.1);
+        }
+
+        .contact-form h2 {
+            text-align: center;
+            margin-bottom: 20px;
+            color: #333333;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        .form-group label {
+            font-weight: bold;
+        }
+
+       
+
+        .btn-submit {
+            background-color: #433E49;
+            border: none;
+            border-radius: 5px;
+            color: #ffffff;
+            padding: 10px 20px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .btn-submit:hover {
+            background-color: #928490;
+        }
+        .error {
+            color: red;
+            font-weight: bold;
+            margin-top:4px;
+        }
+    </style>
+    <body>
+        <div class="container">
+            <div class="contact-form">
+                <div class="row">
+                    <div class="col d-flex justify-content-center align-items-center">
+                        <img src="@Url.Content(ViewBag.Picture)" alt="Mail Image" class="img-fluid mb-4" id="img-mail" style="max-width: 300px;">
+                    </div>
+
+                    <div class="col">
+                        <h2>Get in touch</h2>
+                        <div>
+                            @using (Html.BeginForm("SendEmail", "Email", FormMethod.Post,new {enctype="multipart/form-data"}))
+                            {
+                                <div class="form-group">
+                                    <label for="name">Your Name</label>
+                                    <div>@Html.TextBoxFor(model=>model.Subject)</div>
+                                    <span id="nameError" class="error"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="email">Your Email</label>
+                                    <div>@Html.TextBoxFor(model=>model.From)</div>
+                                    <span id="emailError" class="error"></span>
+                                </div>
+                                <div class="form-group">
+                                    <label for="message">Message</label>
+                                    <div>@Html.TextAreaFor(model=>model.Body,new { rows = "15", cols = "25" })</div>
+                                    <span id="messageError" class="error"></span>
+                                </div>
+                               
+                                <button type="submit" class="btn btn-submit btn-block" >Send Message</button>
+                            }
+
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+       
+        <!-- Add Bootstrap JS scripts -->
+      
+    </body>
+
+</main>
+@section Scripts{
+    <script>
+        function send() {
+            var emailPattern = /^[a-zA-Z0-9._%+-]+@@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
+            var flag=0
+            n = document.getElementById("name")
+            e = document.getElementById("email")
+            m = document.getElementById("message")
+            error = document.getElementById("emailError")
+            errorName = document.getElementById("nameError")
+            messageError = document.getElementById("messageError")
+            if (n.value == "") {
+                errorName.textContent = "Please enter your name"
+            } else {
+                errorName.textContent=""
+            }
+            if (m.value == "") {
+                messageError.textContent = "Please enter your message"
+            } else {
+                messageError.textContent=""
+            }
+            if (!emailPattern.test(e.value)) {
+                error.textContent = "Please enter a valid email address"
+                flag==1
+            }
+            if (m.value == "" || n.value == "" || flag == 1) {
+                console.log("neshto nije u redu")
+                return;
+            }
+           
+                n.value = ""
+                m.value=""
+                e.value = ""
+                img = document.getElementById("img-mail")
+                error.textContent=""
+                img.src = "/Pictures/mail.png"
+           
+
+        }
+    </script>
+    }

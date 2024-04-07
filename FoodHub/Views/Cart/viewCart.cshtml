@@ -1,0 +1,98 @@
+﻿@model  FoodHub.Models.ShoppingCart
+<div class="container">
+    <ul class="m-3">
+        <h4 class="m-3">Selected meals</h4>
+
+        @foreach (var item in Model.Items)
+        {
+            <li class="d-flex g-4 m-3 w-75 w-md-50 h-30" style="background-color:#928490; font-size: 16px;">
+                <h6 class="m-2 w-100 w-md-50">@item.Meal.name</h6>
+                <h6 class="m-2 mx-2 w-50">@item.quantity</h6>
+                <h6 class="m-2 w-100 w-md-50">@item.Restaurant</h6>
+                <div class="d-flex gap-2">
+                    <button data-table="@item.Id" class="btn btn-dark btn-sm w-100 js-delete" style="background-color:#433E49; font-size: 14px;">Delete</button>
+                </div>
+            </li>
+        }
+
+        <h5 class="m-3"> Total:  <span id="price">@Model.TotalPrice</span> MKD</h5>
+
+        <hr />
+        <li class="d-flex align-items-center">
+            <h4 class="m-3 h-25">Your location:</h4>
+            <input id="location" class="form-control input-group-sm h-25 mw-20" type="text" />
+        </li>
+        <hr />
+    
+        <hr />
+        <li class="d-flex align-items-center">
+            <h4 class="m-3 h-25">Delivery in:</h4>
+            <input id="deliveryTime"class="form-control input-group-sm h-25 mw-20" type="number" value="20" min="20" style="max-width:70px" />
+            <h4 class="m-3 h-25">minutes</h4>
+        </li>
+        <li class="m-3 d-flex align-items-center">
+            <button id="orderButton"class="btn btn-dark" style="background-color:#433E49; font-size: 14px;">Order</button>
+        </li>
+    </ul>
+</div>
+@section Scripts{
+    <script>
+        var price = $("#price");
+        var locationInput = $("#location");
+        var deliveryTime = $("#deliveryTime").val();
+        var formData = new FormData();
+        formData.append('location', location);
+        formData.append('deliveryTime', deliveryTime);
+        formData.append('price', price);
+
+        $(document).ready(function () {
+
+            $(".js-delete").on("click", function () {
+                var btn = $(this);
+                bootbox.confirm("Are you sure you want to delete this meal from your card?", function (result) {
+                    if (result) {
+                        $.ajax({
+                            url: "/Cart/Delete/" + btn.attr("data-table"),
+                            method: "GET",
+                            success: function () {
+                                btn.parent().parent().remove();
+
+                                cena1 = parseInt(price.text())
+                                cena2 = btn.parent().parent().children()[2].innerText
+                                console.log(cena1)
+                                console.log(cena2)
+                                total=cena1-cena2
+                                console.log(total)
+                                price.text(total)
+                            }
+                        });
+                    }
+                });
+            });
+
+            $("#orderButton").on("click", function () {
+                // Remove orders from the database
+                $.ajax({
+                    url: "/Cart/PlaceOrder", // Replace with the correct URL to remove all orders
+                    method: "POST",
+                    processData: false, // Prevent jQuery from automatically processing the data
+                    contentType: false,
+                    data:formData,
+                    success: function () {
+                        
+                        $(".js-delete").parent().parent().remove();
+                        price.text("0");
+                        locationInput.val("");
+                        nameInput.val("20");
+                    },
+                    error: function (xhr, textStatus, errorThrown) {
+                        
+                        console.error("Failed to place order. Error: " + errorThrown);
+                    }
+                });
+            });
+        });
+
+    </script>
+    
+}

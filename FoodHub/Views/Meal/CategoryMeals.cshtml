@@ -1,0 +1,42 @@
+﻿@model IEnumerable<FoodHub.Models.Meal>
+@{
+    ViewBag.Title = "meals";
+}
+
+
+<div class="container">
+    <h2 style="font-weight:bold; color:#433E49">Choose meal:</h2>
+    <hr />
+    <div class="row row-cols-1 row-cols-md-3 g-4">
+
+        @foreach (var m in Model)
+        {
+           <a class="col" href="/Restaurant/showRestaurants/@m.Id" style="text-decoration:none">
+                   <div class="card h-100">
+                       <img src="@Url.Content(m.urlImage)" class="card-img-top" alt="...">
+                       <div class="card-body">
+                           <h5 class="card-title">@m.name</h5>
+                           <p class="card-text">
+                               Ingredients
+                               @foreach (var item in m.Ingredients)
+                               {
+
+                                   @item.Ingredient.Name
+                                   @Html.Raw(", ")
+                               }
+                                
+                           </p>
+                       </div>
+                       <div class="card-footer" style="background-color:#928490">
+                           <small style="color:#F3E8EB">Lowest price: @m.BasePrice denars</small>
+                       </div>
+                   </div>
+           </a>
+               
+           
+
+        }
+    </div>
+</div>
+
+
